@@ -5,12 +5,12 @@ services:
     image: mysql:latest
     restart: always
     environment:
-      MYSQL_DATABASE: 'weddings'
+      MYSQL_DATABASE: ${DB_NAME}
       # Create a Database User so I don't have to use root
-      MYSQL_USER: 'admin'
-      MYSQL_PASSWORD: 'password'
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
       # Password for root access
-      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     ports:
       # <Port exposed> : <MySQL Port running inside container>
       - '3306:3306'
@@ -20,6 +20,20 @@ services:
     # Where data will be persisted
     volumes:
       - weddings-db:/var/lib/mysql
+    
+  app:
+    build: .
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - '3001:3001'
+    depends_on:
+      - db
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
 # Names the volume
 volumes:
   weddings-db:
+  

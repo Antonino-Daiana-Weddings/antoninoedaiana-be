@@ -1,13 +1,25 @@
 const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
 
+require('dotenv').config({ path: '../.env' });
+
 // DB Connection. Variables are taken from .env file
 const connection = mysql.createConnection({
-  host: 'localhost', // Cambia se il database non è in locale
-  user: 'admin', // Sostituisci con il tuo utente del database
-  password: 'password', // Sostituisci con la tua password del database
-  database: 'weddings'
+  host: process.env.DB_HOST, // Cambia se il database non è in locale
+  user: process.env.DB_USER, // Sostituisci con il tuo utente del database
+  password: process.env.DB_PASSWORD, // Sostituisci con la tua password del database
+  database: process.env.DB_NAME
 });
+
+async function checkInitialization() {
+  try {
+    const tablesExist = await queryPromise("SHOW TABLES LIKE 'guests';");
+    return tablesExist.length > 0;
+  } catch (error) {
+    console.error('Error checking for existing tables:', error);
+    throw error; // Rethrow or handle as needed
+  }
+}
 
 // Function to execute queries using promises
 function queryPromise(sql) {
@@ -23,6 +35,12 @@ function queryPromise(sql) {
 
 // Create tables fuctions
 async function createTables() {
+  const isInitialized = await checkInitialization();
+  if(isInitialized) {
+    console.log('Database già inizializzato');
+    return;
+  }
+
   const createUsersTable = `
     CREATE TABLE IF NOT EXISTS users (
       user_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -62,6 +80,8 @@ async function createTables() {
   console.log('Tabella invitations creata con successo');
   await queryPromise(createGuestsTable);
   console.log('Tabella guests creata con successo');
+
+  await insertUsers();
 }
 
 // Funzione per inserire gli utenti
@@ -91,7 +111,6 @@ async function main() {
 
   try {
     await createTables();
-    await insertUsers();
   } catch (err) {
     console.error('Errore:', err);
   } finally {
