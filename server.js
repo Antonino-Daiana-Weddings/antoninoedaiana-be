@@ -36,18 +36,9 @@ const guestsDao = require('./guestsDao');
 /* Enable CORS */
 const cors = require('cors');
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (origin === 'https://antoninoedaiana.it' || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true, // to allow cookies to be sent with requests
+  origin: '*', // Not recommended for production, just for testing
+  credentials: true,
 };
-
 app.use(cors(corsOptions));
 
 /********************************* Session Management ************************************/
