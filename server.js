@@ -37,7 +37,8 @@ const guestsDao = require('./guestsDao');
 const cors = require('cors');
 app.use(cors({
   origin: 'https://antoninoedaiana.it',
-  optionsSuccessStatus: 200
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 /********************************* Session Management ************************************/
