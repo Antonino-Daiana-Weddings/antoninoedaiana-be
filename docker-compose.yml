@@ -31,9 +31,10 @@ services:
     depends_on:
       - db
     volumes:
-      - .:/usr/src/app
+      - weddings-be:/usr/src/app
       - /usr/src/app/node_modules
 # Names the volume
 volumes:
   weddings-db:
+  weddings-be:
   
