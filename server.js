@@ -225,15 +225,17 @@ app.post('/api/invitations', body('name').isString().isLength({ min: 1 }), (req,
     if (invitation) {
       invitationId = generateInvitationId();
     }
+
+    invitationsDao.addInvitation(invitationId, name, status, comment).then(invitationId => {
+      res.status(201).json({ invitationId: invitationId });
+    }).catch(err => {
+      res.status(500).json({ error: 'An error occurred', description: err});
+    });
+    
   }).catch(err => {
     res.status(500).json({ error: 'An error occurred', description: err });
   });
 
-  invitationsDao.addInvitation(invitationId, name, status, comment).then(invitationId => {
-    res.status(201).json({ invitationId: invitationId });
-  }).catch(err => {
-    res.status(500).json({ error: 'An error occurred', description: err});
-  });
 });
 
 // Add a new guest to a given invitation
