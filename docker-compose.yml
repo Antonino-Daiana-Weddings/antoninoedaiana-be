@@ -32,9 +32,10 @@ services:
       - db
     volumes:
       - weddings-be:/usr/src/app
-      - /usr/src/app/node_modules
+      - weddings-be-node:/usr/src/app/node_modules
 # Names the volume
 volumes:
   weddings-db:
   weddings-be:
+  weddings-be-node:
   
