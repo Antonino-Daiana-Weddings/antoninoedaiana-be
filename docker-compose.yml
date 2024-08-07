@@ -3,7 +3,6 @@ version: '3.3'
 services:
   db:
     image: mysql:latest
-    restart: always
     environment:
       MYSQL_DATABASE: ${DB_NAME}
       # Create a Database User so I don't have to use root
