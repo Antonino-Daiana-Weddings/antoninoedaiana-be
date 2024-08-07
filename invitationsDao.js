@@ -1,16 +1,13 @@
 'use strict';
 
 const mysql = require('mysql2');
+const dbconn = require('./database/db-conn');
+
 // Load environment variables
 require('dotenv').config();
 
 // Connection to the database
-const db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
-  });
+const db = dbconn.connection;
 
 // Get all invitations and then get all guests for each invitation so that all guests are an attribute of invitation
 exports.getAllInvitationsWithGuests = () => {
