@@ -17,6 +17,7 @@ services:
     # Where data will be persisted
     volumes:
       - weddings-db:/var/lib/mysql
+      - database-init-scripts:/docker-entrypoint-initdb.d
     
   app:
     build: .
@@ -35,4 +36,10 @@ volumes:
   weddings-db:
   weddings-be:
   weddings-be-node:
+  database-init-scripts:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/database
   
