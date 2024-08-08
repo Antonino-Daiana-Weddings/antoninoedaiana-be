@@ -13,7 +13,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     ports:
       # <Port exposed> : <MySQL Port running inside container>
-      - '3306:3306'
+      - '127.0.0.1:3306:3306'
     # Where data will be persisted
     volumes:
       - weddings-db:/var/lib/mysql
@@ -24,7 +24,7 @@ services:
     env_file:
       - .env
     ports:
-      - '3001:3001'
+      - '127.0.0.1:3001:3001'
     depends_on:
       - db
     volumes:
