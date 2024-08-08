@@ -11,7 +11,7 @@ RUN npm install
 
 ENV NAME World
 
-CMD ["/bin/sh", "-c", "node /usr/src/app/database/db-init.js && /usr/wait-for-it.sh db:3306 -- node server.js"]
+CMD ["/bin/sh", "-c", "node server.js"]
 
 # CMD ["/bin/sh", "-c", "node /usr/src/app/database/db-init.js && /usr/wait-for-it.sh db:3306 -- pm2-runtime start server.js"]
 # CMD ["/bin/sh", "-c", "/usr/wait-for-it.sh db:3306 -- pm2-runtime start server.js"]
