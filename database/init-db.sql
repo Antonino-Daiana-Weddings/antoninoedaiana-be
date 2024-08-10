@@ -1,3 +1,5 @@
+USE weddings;
+
 DELIMITER $$
 
 CREATE PROCEDURE InitializeDatabase()
